@@ -13,12 +13,12 @@ namespace SmatSchool.WebAPI.Controllers
     public class AlunoController : ControllerBase
     {
     // private readonly DataContext context;
-    private readonly DataContext _context;
+        private readonly DataContext _context;
 
-    public AlunoController(DataContext context) {
-    //   this.context = context;
-        _context = context;
-    }
+        public AlunoController(DataContext context) {
+        //   this.context = context;
+            _context = context;
+        }
 
         [HttpGet]
         public IActionResult Get() {
