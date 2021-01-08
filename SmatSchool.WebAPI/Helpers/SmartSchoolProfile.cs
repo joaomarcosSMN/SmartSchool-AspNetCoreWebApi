@@ -20,6 +20,8 @@ namespace SmatSchool.WebAPI.Helpers
                 
             CreateMap<AlunoDto, Aluno>();
             CreateMap<Aluno, AlunoRegistrarDto>().ReverseMap();
+
+            CreateMap<Professor, ProfessorDto>().ReverseMap();
         }
     }
 }
