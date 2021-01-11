@@ -1,5 +1,8 @@
+using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using SmatSchool.WebAPI.Helpers;
 using SmatSchool.WebAPI.Models;
 
 namespace SmatSchool.WebAPI.Data
@@ -46,6 +49,22 @@ namespace SmatSchool.WebAPI.Data
         query = query.AsNoTracking().OrderBy(a => a.Id);
 
         return query.ToArray();
+    }
+    public async Task<PageList<Aluno>> GetAllAlunosAsync(PageParams pageParams, bool includeProfessor = false)
+    {
+        IQueryable<Aluno> query = _context.Alunos;
+
+        if(includeProfessor)
+        {
+            query = query.Include(a => a.AlunoDisciplinas)
+                         .ThenInclude(ad => ad.Disciplina)
+                         .ThenInclude(d => d.Professor);
+        } 
+
+        query = query.AsNoTracking().OrderBy(a => a.Id);
+
+        // return await query.ToListAsync();
+        return await PageList<Aluno>.CreateAsync(query, pageParams.PageNumber, pageParams.PageSize);
     }
 
     public Aluno[] GetAllAlunosByDisciplinaId(int disciplinaId, bool includeProfessor = false)

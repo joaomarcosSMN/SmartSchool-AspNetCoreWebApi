@@ -1,10 +1,12 @@
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SmatSchool.WebAPI.Data;
 using SmatSchool.WebAPI.DTOs;
+using SmatSchool.WebAPI.Helpers;
 using SmatSchool.WebAPI.Models;
 
 namespace SmatSchool.WebAPI.Controllers
@@ -29,10 +31,16 @@ namespace SmatSchool.WebAPI.Controllers
     }
 
     [HttpGet]
-    public IActionResult Get()
+    public async Task<IActionResult> Get([FromQuery]PageParams pageParams)
     {
-      var alunos = _repo.GetAllAlunos(true);
-      return Ok(_mapper.Map<IEnumerable<AlunoDto>>(alunos));
+      // var alunos = _repo.GetAllAlunos(true);
+      var alunos = await _repo.GetAllAlunosAsync(pageParams, true);
+
+      var alunosResult = _mapper.Map<IEnumerable<AlunoDto>>(alunos);
+
+      Response.AddPagination(alunos.CurrentPage, alunos.PageSize, alunos.TotalCount, alunos.TotalPages);
+
+      return Ok(alunosResult);
     }
 
     [HttpGet("{id}")]
