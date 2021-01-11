@@ -27,7 +27,7 @@ namespace SmatSchool.WebAPI.Models
     public string Telefone { get; set; }
     public DateTime DataNascimento { get; set; }
     public DateTime DataInicio { get; set; } = DateTime.Now;
-    public DateTime? DataFim { get; set; } = null;    
+    public DateTime? DataFim { get; set; } = null;  
     public bool Ativo { get; set; } = true;
     public IEnumerable<AlunoDisciplina> AlunoDisciplinas { get; set; }
   }

@@ -10,5 +10,11 @@ namespace SmatSchool.WebAPI.Helpers
             get { return pageSize; }
             set { pageSize = (value > MaxPageSize) ? MaxPageSize : value; }
         }
+
+        public int? Matricula { get; set; } = null;
+        public string Nome { get; set; } = string.Empty;
+        // public bool Ativo { get; set; } = true;
+        public int? Ativo { get; set; } = null;
+        
     }
 }
